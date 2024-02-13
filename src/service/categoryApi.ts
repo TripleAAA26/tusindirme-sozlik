@@ -43,6 +43,7 @@ export async function createCategoryApi({ accessToken, newCategory }: TypeCreate
 
     }catch (e) {
         console.log(e)
+        throw new Error(e)
     }
 }
 
@@ -69,6 +70,7 @@ export async function updateCategoryApi({ accessToken, newCategory, idCategory }
 
     }catch (e) {
         console.log(e)
+        throw new Error(e)
     }
 }
 
@@ -93,5 +95,6 @@ export async function deleteCategoryApi({ accessToken, idCategory }: TypeDelete)
 
     }catch (e) {
         console.log(e)
+        throw new Error(e)
     }
 }

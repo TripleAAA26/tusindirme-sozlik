@@ -18,6 +18,7 @@ export async function getAdminApi({ accessToken }: TypeGet) {
 
     }catch (e) {
         console.log(e)
+
     }
 }
 
@@ -62,6 +63,7 @@ export async function createAdminApi({ accessToken, newAdmin }: TypeCreate) {
 
     }catch (e) {
         console.log(e)
+        throw new Error(e)
     }
 }
 
@@ -87,6 +89,7 @@ export async function updateAdminApi({ accessToken, updatedAdmin }: TypeUpdate) 
 
     }catch (e) {
         console.log(e)
+        throw new Error(e)
     }
 }
 
@@ -111,6 +114,7 @@ export async function deleteAdminApi({ accessToken, user_id }: TypeDelete) {
 
     }catch (e) {
         console.log(e)
+        throw new Error(e)
     }
 }
 

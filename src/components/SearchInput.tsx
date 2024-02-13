@@ -20,8 +20,8 @@ const fetch = (value: string, callback: Function) => {
          if (currentValue === value) {
              const { data } = d
              const result = data.map((item: any) => ({
-                 value: item.category.latin,
-                 text: item.category.latin,
+                 value: item.title.latin,
+                 text: item.title.latin,
                  id: item.id
              }))
 
@@ -48,7 +48,7 @@ const SearchInput: React.FC<{ placeholder: string; style: React.CSSProperties; s
         setValue(newValue)
     }
 
-    const handleSelect = (selected: string) => {
+    const handleSelect = (selected) => {
         props.setSelectedWord(selected)
     }
 
@@ -68,7 +68,7 @@ const SearchInput: React.FC<{ placeholder: string; style: React.CSSProperties; s
             onSelect={handleSelect}
             notFoundContent={null}
             options={(data || []).map((d) => ({
-                value: d.value,
+                value: d.id,
                 label: d.text,
                 key: d.id
             }))}

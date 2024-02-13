@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import useCreateWord from '../hooks/useCreateWord.ts'
-import { Button, Flex, Form, Input, Modal, Select } from 'antd'
+import { Button, Flex, Form, Input, message, Modal, Select } from 'antd'
 import { EditOutlined, PlusCircleOutlined } from '@ant-design/icons'
 import useUpdateWord from '../hooks/useUpdateWord.ts'
 import { useQuery } from '@tanstack/react-query'
@@ -11,12 +11,8 @@ export default function CreateUpdateWord({ item = {} }) {
     const [ open, setOpen ] = useState(false)
     const [ confirmLoading, setConfirmLoading ] = useState(false)
     const [ form ] = Form.useForm()
+    const [ messageApi, contextHolder ] = message.useMessage()
 
-    const [ categoryId, setCategoryId ] = useState(0)
-    const [ titleKiril, setTitleKiril ] = useState('')
-    const [ titleLatin, setTitleLatin ] = useState('')
-    const [ descriptionKiril, setDescriptionKiril ] = useState('')
-    const [ descriptionLatin, setDescriptionLatin ] = useState('')
     const isUpdateSession = Boolean(item.id)
 
     const { createWord, isPending:isCreactingWord } = useCreateWord()
@@ -34,39 +30,50 @@ export default function CreateUpdateWord({ item = {} }) {
         setOpen(true)
 
         if (isUpdateSession) {
-            setCategoryId(item.category_id)
-            setTitleKiril(item.title.kiril)
-            setTitleLatin(item.title.latin)
-            setDescriptionKiril(item.description.kiril)
-            setDescriptionLatin(item.description.latin)
+            form.setFieldsValue({
+                'categoryId': item.category_id,
+                'titleKiril': item.title.kiril,
+                'titleLatin': item.title.latin,
+                'descriptionKiril': item.description.kiril,
+                'descriptionLatin': item.description.latin,
+            })
         }
     }
-    const handleOk = () => {
-        if (!titleKiril || !titleLatin || !descriptionKiril || !descriptionLatin) return
+    const handleOk = (values) => {
+        if (!values.categoryId || !values.titleKiril || !values.titleLatin ||
+            !values.descriptionKiril || !values.descriptionLatin) return
         setConfirmLoading(true)
 
         if (isUpdateSession) {
             updateWord({
                 idWord: item.id,
                 updatedWord: {
-                    category_id: categoryId,
+                    category_id: values.categoryId,
                     title: {
-                        kiril: titleKiril,
-                        latin: titleLatin,
+                        kiril: values.titleKiril,
+                        latin: values.titleLatin,
                     },
                     description: {
-                        kiril: descriptionKiril,
-                        latin: descriptionLatin
+                        kiril: values.descriptionKiril,
+                        latin: values.descriptionLatin
                     }
                 }
             },{
-                onSettled: () => {
-                    setCategoryId(0)
-                    setTitleKiril('')
-                    setTitleLatin('')
-                    setDescriptionKiril('')
-                    setDescriptionLatin('')
+                onSuccess: () => {
                     form.resetFields()
+
+                    setOpen(false)
+                    setConfirmLoading(false)
+                    messageApi.open({
+                        type: 'success',
+                        content: 'Word successfully updated!',
+                    })
+                },
+                onError: (error) => {
+                    messageApi.open({
+                        type: 'error',
+                        content: 'Could not update word!',
+                    })
                 }
             })
         } else {
@@ -74,48 +81,49 @@ export default function CreateUpdateWord({ item = {} }) {
                 newWord: {
                     category_id: 1,
                     title: {
-                        kiril: titleKiril,
-                        latin: titleLatin,
+                        kiril: values.titleKiril,
+                        latin: values.titleLatin,
                     },
                     description: {
-                        kiril: descriptionKiril,
-                        latin: descriptionLatin
+                        kiril: values.descriptionKiril,
+                        latin: values.descriptionLatin
                     }
                 }
             }, {
-                onSettled: () => {
-                    setCategoryId(0)
-                    setTitleKiril('')
-                    setTitleLatin('')
-                    setDescriptionKiril('')
-                    setDescriptionLatin('')
+                onSuccess: () => {
                     form.resetFields()
+
+                    setOpen(false)
+                    setConfirmLoading(false)
+                    messageApi.open({
+                        type: 'success',
+                        content: 'Word successfully created!',
+                    })
+                },
+                onError: (error) => {
+                    messageApi.open({
+                        type: 'error',
+                        content: 'Could not create word!',
+                    })
                 }
             })
         }
 
-        setTimeout(() => {
-            setOpen(false)
-            setConfirmLoading(false)
-        }, 2000)
+
     }
     const handleCancel = () => {
         setOpen(false)
 
-        setCategoryId(0)
-        setTitleKiril('')
-        setTitleLatin('')
-        setDescriptionKiril('')
-        setDescriptionLatin('')
         form.resetFields()
     }
 
 
     return (
         <>
+            {contextHolder}
             <Flex justify='end'>
                 <Button type={isUpdateSession ? 'default' : 'primary'} onClick={showModal}>
-                    {isUpdateSession ? <div><EditOutlined /> edit</div> :  <div><PlusCircleOutlined/> Create word</div> }
+                    {isUpdateSession ? <span><EditOutlined /> edit</span> :  <span><PlusCircleOutlined/> Create word</span> }
                 </Button>
             </Flex>
             <Modal
@@ -135,9 +143,8 @@ export default function CreateUpdateWord({ item = {} }) {
                     onFinish={handleOk}
                 >
                     <Form.Item
-                        initialValue={isUpdateSession && item.category_id}
                         label='category'
-                        name='category'
+                        name='categoryId'
                         rules={[
                             {
                                 required: true,
@@ -148,15 +155,12 @@ export default function CreateUpdateWord({ item = {} }) {
                         <Select
                             options={categoryOptions}
                             disabled={isCreactingWord || isUpdatingWord}
-                            value={categoryId}
-                            onChange={(value) => setCategoryId(value)}
                         />
                     </Form.Item>
 
                     <Form.Item
-                        initialValue={isUpdateSession ? item.title.kiril : ''}
                         label='title kiril'
-                        name='title kiril'
+                        name='titleKiril'
                         rules={[
                             {
                                 required: true,
@@ -166,15 +170,12 @@ export default function CreateUpdateWord({ item = {} }) {
                     >
                         <Input
                             disabled={isCreactingWord || isUpdatingWord}
-                            value={titleKiril}
-                            onChange={(e) => setTitleKiril(e.target.value)}
                         />
                     </Form.Item>
 
                     <Form.Item
-                        initialValue={isUpdateSession ? item.title.latin : ''}
                         label='title latin'
-                        name='title latin'
+                        name='titleLatin'
                         rules={[
                             {
                                 required: true,
@@ -184,15 +185,12 @@ export default function CreateUpdateWord({ item = {} }) {
                     >
                         <Input
                             disabled={isCreactingWord || isUpdatingWord}
-                            value={titleLatin}
-                            onChange={(e) => setTitleLatin(e.target.value)}
                         />
                     </Form.Item>
 
                     <Form.Item
-                        initialValue={isUpdateSession ? item.description.kiril : ''}
                         label='description kiril'
-                        name='description kiril'
+                        name='descriptionKiril'
                         rules={[
                             {
                                 required: true,
@@ -201,17 +199,13 @@ export default function CreateUpdateWord({ item = {} }) {
                         ]}
                     >
                         <Input.TextArea
-
                             disabled={isCreactingWord || isUpdatingWord}
-                            value={descriptionKiril}
-                            onChange={(e) => setDescriptionKiril(e.target.value)}
                         />
                     </Form.Item>
 
                     <Form.Item
-                        initialValue={isUpdateSession ? item.description.latin : ''}
                         label='description latin'
-                        name='description latin'
+                        name='descriptionLatin'
                         rules={[
                             {
                                 required: true,
@@ -221,8 +215,6 @@ export default function CreateUpdateWord({ item = {} }) {
                     >
                         <Input.TextArea
                             disabled={isCreactingWord || isUpdatingWord}
-                            value={descriptionLatin}
-                            onChange={(e) => setDescriptionLatin(e.target.value)}
                         />
                     </Form.Item>
                 </Form>

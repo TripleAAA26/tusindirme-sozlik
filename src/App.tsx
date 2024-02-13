@@ -15,7 +15,7 @@ import SuperAdmin, { loader as adminLoader } from './pages/SuperAdmin.tsx'
 import Category, { loader as categoryLoader } from './pages/Category.tsx'
 import Word, { loader as wordLoader } from './pages/Word.tsx'
 import useAuth from './hooks/useAuth.tsx'
-import SelectedWord, { loader as selectedWordLoader } from './pages/SelectedWord.tsx'
+import SelectedWord from './pages/SelectedWord.tsx'
 
 
 const queryClient = new QueryClient({
@@ -52,7 +52,7 @@ const AppRoot = () => {
                         { path: '/admin/superadmin', element: <SuperAdmin/>, loader: adminLoader(queryClient, auth) },
                         { path: '/admin/category', element: <Category/>, loader: categoryLoader(queryClient, auth) },
                         { path: '/admin/word', element: <Word/>, loader: wordLoader(queryClient, auth) },
-                        { path: '/admin/word/:idword', element: <SelectedWord/>,  },
+                        { path: '/admin/word/:idword', element: <SelectedWord/> },
                     ]
                 }
             ]

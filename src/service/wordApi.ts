@@ -76,6 +76,7 @@ export async function createWordApi({ accessToken, newWord }: TypeCreate) {
 
     }catch (e) {
         console.log(e)
+        throw new Error(e)
     }
 }
 
@@ -113,6 +114,7 @@ export async function updateWordApi({ accessToken, idWord, updatedWord }: TypeUp
 
     }catch (e) {
         console.log(e)
+        throw new Error(e)
     }
 }
 
@@ -138,6 +140,7 @@ export async function deleteWordApi({ accessToken, idWord }: TypeDelete) {
 
     }catch (e) {
         console.log(e)
+        throw new Error(e)
     }
 }
 
@@ -167,6 +170,7 @@ export async function createAntonymApi({ accessToken, newAntonym }: TypeCreateAn
 
     }catch (e) {
         console.log(e)
+        throw new Error(e)
     }
 }
 
@@ -192,6 +196,7 @@ export async function deleteAntonymApi({ accessToken, idWord, idAntonym }: TypeD
 
     }catch (e) {
         console.log(e)
+        throw new Error(e)
     }
 }
 
@@ -222,6 +227,7 @@ export async function createSynonymApi({ accessToken, newSynonym }: TypeCreateSy
 
     }catch (e) {
         console.log(e)
+        throw new Error(e)
     }
 }
 
@@ -247,6 +253,7 @@ export async function deleteSynonymApi({ accessToken, idWord, idSynonym }: TypeD
 
     }catch (e) {
         console.log(e)
+        throw new Error(e)
     }
 }
 
@@ -261,7 +268,7 @@ type TypeIsCorrect = {
 }
 export async function isCorrectApi({ accessToken, idWord, updatedIsCorrect }: TypeIsCorrect) {
     try {
-        const res = await fetch(`${API_URL}/is-correct${idWord}`,{
+        const res = await fetch(`${API_URL}/is-correct/${idWord}`,{
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${accessToken}`
@@ -275,6 +282,7 @@ export async function isCorrectApi({ accessToken, idWord, updatedIsCorrect }: Ty
 
     }catch (e) {
         console.log(e)
+        throw new Error(e)
     }
 }
 
@@ -283,18 +291,17 @@ export async function isCorrectApi({ accessToken, idWord, updatedIsCorrect }: Ty
 type TypeCreateAudio = {
     accessToken: string,
     idWord: number,
-
+    audioFile: FormData,
 }
 
-export async function createAudioApi({ accessToken, idWord }: TypeCreateAudio) {
+export async function createAudioApi({ accessToken, idWord, audioFile }: TypeCreateAudio) {
     try {
         const res = await fetch(`${API_URL}/audios/${idWord}`,{
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${accessToken}`
             },
             method: 'POST',
-            body: JSON.stringify(''),
+            body: audioFile,
         })
         const data = await res.json()
         console.log(data)
@@ -302,6 +309,7 @@ export async function createAudioApi({ accessToken, idWord }: TypeCreateAudio) {
 
     }catch (e) {
         console.log(e)
+        throw new Error(e)
     }
 }
 
@@ -326,5 +334,6 @@ export async function deleteAudioApi({ accessToken, idWord }: TypeDeleteAudio) {
 
     }catch (e) {
         console.log(e)
+        throw new Error(e)
     }
 }

@@ -1,48 +1,57 @@
 import { AudioOutlined, ShareAltOutlined } from '@ant-design/icons'
 import { Card, Col, Flex, Row } from 'antd'
+import { getWords } from '../service/getWords.ts'
+import { useQuery } from '@tanstack/react-query'
 
-export default function SearchResults({ selectedWord }) {
-    console.log('result',selectedWord)
+export default function SearchResults({ selectedWordId }) {
+    console.log('result',selectedWordId)
 
+    const { data: wordList } = useQuery({
+        queryKey: [ 'wordlist' ],
+        queryFn: async () => getWords(),
+    })
+
+    const word = wordList?.data.find(word => word.id === selectedWordId)
+    console.log(word)
     return (
         <Card>
             <Flex justify='space-between'>
                 <Flex gap='2rem'>
-                    <h1 style={{ margin: '0' }}>{selectedWord}</h1>
+                    <h1 style={{ margin: '0' }}>{word.title.latin}</h1>
                     <AudioOutlined style={{ fontSize: '1.5rem' }}/>
                 </Flex>
                 <ShareAltOutlined style={{ fontSize: '1.5rem' }}/>
             </Flex>
-            <p style={{ color: 'lightgray', marginTop: '0' }}>Kelbetlik</p>
+            <p style={{ color: 'lightgray', marginTop: '0' }}>{word.category.latin}</p>
             <p>
-                Jetkilikli, mol, kóp, qurǵın, barshılıq. Zamanımız endi boldı abadan. Kámbaǵalǵa náwbet jete
-                basladı (A. Muwsaev). Biz paxtakesh xalıqlar azat shıǵısta, Jasaymız abadan shadlı turmısta
-                (I. Yusupov). Ádira qalǵır tuwǵan jer. Bolmaǵan soń abadan (Jiyen jıraw).
+                {word.description.latin}
             </p>
             <Row>
                 <Col span={8}>
                     <div style={{ color: '#229ED9', fontWeight: 'bold' }}>
                         Sinonim
                     </div>
-                    <div>Abadan</div>
-                    <div>Abadanshılıq</div>
-                    <div>Abay</div>
+                    {word.synonym && word.synonym?.map(item =>
+                        <div key={item.id}>
+                            {item.title.latin}
+                        </div>
+                    )}
                 </Col>
                 <Col span={8}>
                     <div style={{ color: '#229ED9', fontWeight: 'bold' }}>
                         Antonim
                     </div>
-                    <div>Abay-sıyasat</div>
-                    <div>Abaylı</div>
-                    <div>Abaysız</div>
+                    {word.antonym && word.antonym?.map(item =>
+                        <div key={item.id}>
+                            {item.title.latin}
+                        </div>
+                    )}
                 </Col>
                 <Col span={8}>
                     <div style={{ color: '#229ED9', fontWeight: 'bold' }}>
                         Uqsas so'zler
                     </div>
-                    <div>Abadan</div>
-                    <div>Abadanlıq</div>
-                    <div>Abaysızlıq</div>
+
                 </Col>
             </Row>
         </Card>
