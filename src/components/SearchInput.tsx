@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Select } from 'antd'
 import type { SelectProps } from 'antd'
 import { getWords } from '../service/getWords.ts'
@@ -21,7 +21,7 @@ const fetch = (value: string, callback: Function, wordList) => {
          if (currentValue === value) {
              const { data } = wordList
 
-             const result = data.map((item: any) => ({
+             const result = data.map((item) => ({
                  value: item.title.latin,
                  text: item.title.latin,
                  id: item.id

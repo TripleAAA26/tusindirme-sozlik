@@ -9,7 +9,7 @@ export default function CardAudio({ selectedWord }) {
     const [ form ] = Form.useForm()
     const [ messageApi, contextHolder ] = message.useMessage()
 
-    const { createAudio, isPending } = useCreateAudio()
+    const { createAudio } = useCreateAudio()
     const { deleteAudio } = useDeleteAudio()
 
     const showModal = () => {
