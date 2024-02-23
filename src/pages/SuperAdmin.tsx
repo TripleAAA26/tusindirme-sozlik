@@ -1,13 +1,15 @@
-import useAuth from '../hooks/useAuth.tsx'
+
 import { useQuery } from '@tanstack/react-query'
 import { List } from 'antd'
 import { getAdminApi } from '../service/adminApi.ts'
-import AdminItem from '../components/AdminItem.tsx'
-import CreateUpdateAdmin from '../components/CreateUpdateAdmin.tsx'
+import AdminItem from '../features/Admin-Panel/SuperAdmin/AdminItem.tsx'
+import CreateUpdateAdmin from '../features/Admin-Panel/SuperAdmin/CreateUpdateAdmin.tsx'
+import { useSelector } from 'react-redux'
+import { selectCurrentToken } from '../features/auth/authSlice.ts'
 
 
 export default function SuperAdmin() {
-    const { auth: accessToken } = useAuth()
+    const accessToken = useSelector(selectCurrentToken)
     const { data: admins } = useQuery(adminListQuery(accessToken))
 
     return (
@@ -31,10 +33,10 @@ const adminListQuery = (accessToken) => ({
     queryFn: async () => getAdminApi({ accessToken })
 })
 
-export const loader = (queryClient, auth) =>
+export const loader = (queryClient, accessToken) =>
     async ({ params }) => {
 
         return (
-            await queryClient.ensureQueryData(adminListQuery(auth))
+            await queryClient.ensureQueryData(adminListQuery(accessToken))
         )
     }

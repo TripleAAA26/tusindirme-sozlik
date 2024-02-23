@@ -1,9 +1,10 @@
-import useAuth from './useAuth.tsx'
 import { useQuery } from '@tanstack/react-query'
 import { getSuperAdminApi } from '../service/adminApi.ts'
+import { useSelector } from 'react-redux'
+import { selectCurrentToken } from '../features/auth/authSlice.ts'
 
 export default function useGetSuperAdmin() {
-    const { auth: accessToken } = useAuth()
+    const accessToken = useSelector(selectCurrentToken)
 
     const { data: superAdmin, isPending } = useQuery({
         queryKey: [ 'superAdmin' ],

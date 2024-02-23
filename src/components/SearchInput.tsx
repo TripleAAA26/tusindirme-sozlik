@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import { Select } from 'antd'
 import type { SelectProps } from 'antd'
 import { getWords } from '../service/getWords.ts'
+import { useQuery } from '@tanstack/react-query'
 
 let timeout: ReturnType<typeof setTimeout> | null
 let currentValue: string
 
-const fetch = (value: string, callback: Function) => {
+const fetch = (value: string, callback: Function, wordList) => {
     if (timeout) {
         clearTimeout(timeout)
         timeout = null
@@ -15,10 +16,11 @@ const fetch = (value: string, callback: Function) => {
 
     const fake = async () => {
 
-         const d = await getWords()
+         //const d = await getWords()
 
          if (currentValue === value) {
-             const { data } = d
+             const { data } = wordList
+
              const result = data.map((item: any) => ({
                  value: item.title.latin,
                  text: item.title.latin,
@@ -36,12 +38,17 @@ const fetch = (value: string, callback: Function) => {
     }
 }
 
-const SearchInput: React.FC<{ placeholder: string; style: React.CSSProperties; setSelectedWord: React.Dispatch<React.SetStateAction<string>> }> = (props) => {
+const SearchInput = (props) => {
     const [ data, setData ] = useState<SelectProps['options']>([])
     const [ value, setValue ] = useState<string>()
 
+    const { data: wordList } = useQuery({
+        queryKey: [ 'wordlist' ],
+        queryFn: async () => getWords(),
+    })
+
     const handleSearch = (newValue: string) => {
-        fetch(newValue, setData)
+        fetch(newValue, setData, wordList)
     }
 
     const handleChange = (newValue: string) => {
@@ -49,7 +56,8 @@ const SearchInput: React.FC<{ placeholder: string; style: React.CSSProperties; s
     }
 
     const handleSelect = (selected) => {
-        props.setSelectedWord(selected)
+        const word = wordList.data.find(word => word.id === selected)
+        props.setSelectedWord(word)
     }
 
     return (

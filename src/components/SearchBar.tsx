@@ -7,7 +7,9 @@ import { useState } from 'react'
 
 
 export default function SearchBar() {
-    const [ selectedWordId, setSelectedWordId ] = useState()
+    const [ selectedWord, setSelectedWord ] = useState()
+
+
 
     return (
         <div style={{
@@ -20,9 +22,9 @@ export default function SearchBar() {
         }}>
             <h2>Bir sózdi izleń, onı úyreniń</h2>
 
-            { selectedWordId
+            { selectedWord
                 ?
-                <SearchResults selectedWordId={selectedWordId} />
+                <SearchResults word={selectedWord} />
                 :
                 <Flex style={{ marginBottom: '4rem' }}>
                     <Select
@@ -49,7 +51,7 @@ export default function SearchBar() {
                         size='large'
                     />
                     <SearchInput
-                        setSelectedWord={setSelectedWordId}
+                        setSelectedWord={setSelectedWord}
                         placeholder='Sózdi izlew ushın jazıń ...'
                         style={{width: '100%', }}
                     />

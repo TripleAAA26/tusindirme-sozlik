@@ -1,18 +1,11 @@
 import { AudioOutlined, ShareAltOutlined } from '@ant-design/icons'
 import { Card, Col, Flex, Row } from 'antd'
-import { getWords } from '../service/getWords.ts'
-import { useQuery } from '@tanstack/react-query'
 
-export default function SearchResults({ selectedWordId }) {
-    console.log('result',selectedWordId)
 
-    const { data: wordList } = useQuery({
-        queryKey: [ 'wordlist' ],
-        queryFn: async () => getWords(),
-    })
+export default function SearchResults({ word }) {
+    console.log('result',word)
 
-    const word = wordList?.data.find(word => word.id === selectedWordId)
-    console.log(word)
+
     return (
         <Card>
             <Flex justify='space-between'>

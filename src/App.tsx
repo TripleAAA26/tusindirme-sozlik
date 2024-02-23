@@ -8,14 +8,15 @@ import WordList, { loader as wordListLoader } from "./pages/WordList.tsx"
 import OftenSearchedWords from "./pages/OftenSearchedWords.tsx"
 import Login from './pages/Login.tsx'
 import AdminPanel from './pages/AdminPanel.tsx'
-import RequireAuth from './components/RequireAuth.tsx'
+import RequireAuth from './features/auth/RequireAuth.tsx'
 import TWords from './pages/TWords.tsx'
 import MisspelledWords from './pages/MisspelledWords.tsx'
 import SuperAdmin, { loader as adminLoader } from './pages/SuperAdmin.tsx'
 import Category, { loader as categoryLoader } from './pages/Category.tsx'
 import Word, { loader as wordLoader } from './pages/Word.tsx'
-import useAuth from './hooks/useAuth.tsx'
 import SelectedWord from './pages/SelectedWord.tsx'
+import { useSelector } from 'react-redux'
+import { selectCurrentToken } from './features/auth/authSlice.ts'
 
 
 const queryClient = new QueryClient({
@@ -27,7 +28,7 @@ const queryClient = new QueryClient({
 })
 
 const AppRoot = () => {
-    const { auth } = useAuth()
+    const accessToken = useSelector(selectCurrentToken)
 
     const router = createBrowserRouter([
         {
@@ -49,9 +50,9 @@ const AppRoot = () => {
                 {
                     path: '/admin', element: <AdminPanel/>,
                     children: [
-                        { path: '/admin/superadmin', element: <SuperAdmin/>, loader: adminLoader(queryClient, auth) },
-                        { path: '/admin/category', element: <Category/>, loader: categoryLoader(queryClient, auth) },
-                        { path: '/admin/word', element: <Word/>, loader: wordLoader(queryClient, auth) },
+                        { path: '/admin/superadmin', element: <SuperAdmin/>, loader: adminLoader(queryClient, accessToken) },
+                        { path: '/admin/category', element: <Category/>, loader: categoryLoader(queryClient, accessToken) },
+                        { path: '/admin/word', element: <Word/>, loader: wordLoader(queryClient, accessToken) },
                         { path: '/admin/word/:idword', element: <SelectedWord/> },
                     ]
                 }

@@ -1,14 +1,14 @@
 import { useQuery } from '@tanstack/react-query'
 import { getCategoryApi } from '../service/categoryApi.ts'
-import CategoryItem from '../components/CategoryItem.tsx'
+import CategoryItem from '../features/Admin-Panel/Category/CategoryItem.tsx'
 import { List } from 'antd'
-import useAuth from '../hooks/useAuth.tsx'
-import CreateUpdateCategory from '../components/CreateUpdateCategory.tsx'
+import CreateUpdateCategory from '../features/Admin-Panel/Category/CreateUpdateCategory.tsx'
+import { useSelector } from 'react-redux'
+import { selectCurrentToken } from '../features/auth/authSlice.ts'
 
 
 export default function Category() {
-
-    const { auth: accessToken } = useAuth()
+    const accessToken = useSelector(selectCurrentToken)
     const { data: categories } = useQuery(categoryListQuery(accessToken))
 
     return (
@@ -31,10 +31,10 @@ const categoryListQuery = (accessToken) => ({
     queryFn: async () => getCategoryApi({ accessToken })
 })
 
-export const loader = (queryClient, auth) =>
+export const loader = (queryClient, accessToken) =>
     async ({ params }) => {
 
         return (
-            await queryClient.ensureQueryData(categoryListQuery(auth))
+            await queryClient.ensureQueryData(categoryListQuery(accessToken))
         )
     }

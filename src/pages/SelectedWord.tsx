@@ -2,15 +2,18 @@ import { useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { Checkbox, Col, message, Row } from 'antd'
 import { getWordsApi } from '../service/wordApi.ts'
-import useAuth from '../hooks/useAuth.tsx'
-import CardAntonymSynonym from '../components/CardAntonymSynonym.tsx'
-import CardAudio from '../components/CardAudio.tsx'
-import useIsCorrect from '../hooks/useIsCorrect.ts'
+
+import CardAntonymSynonym from '../features/Admin-Panel/Word/CardAntonymSynonym.tsx'
+import CardAudio from '../features/Admin-Panel/Audio/CardAudio.tsx'
+import useIsCorrect from '../features/Admin-Panel/Word/useIsCorrect.ts'
+import { useSelector } from 'react-redux'
+import { selectCurrentToken } from '../features/auth/authSlice.ts'
 
 
 export default function SelectedWord() {
     const { idword } = useParams()
-    const { auth: accessToken } = useAuth()
+    const accessToken = useSelector(selectCurrentToken)
+
 
     const [ messageApi, contextHolder ] = message.useMessage()
 
