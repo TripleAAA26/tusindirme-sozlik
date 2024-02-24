@@ -1,7 +1,7 @@
 import { Button, Flex } from "antd"
 import { Link } from "react-router-dom"
 import { useState } from "react"
-
+import logo from "../../public/logo.svg"
 
 export default function Navbar() {
     const [ currentLanguage, setCurrentLanguage ] = useState('QQ')
@@ -22,7 +22,7 @@ export default function Navbar() {
 
             <Link to='/'>
                 <Flex gap='1rem'>
-                    <img src="../../public/logo.svg" alt="logo"/>
+                    <img src={logo} alt="logo"/>
                     <span style={{ color: 'white' }}>Túsindirme sózlik</span>
                 </Flex>
             </Link>
