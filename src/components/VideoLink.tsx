@@ -1,6 +1,7 @@
 import {Button, Card, Col, Image, Row} from "antd"
 import {ArrowRightOutlined} from "@ant-design/icons"
 import { Link } from 'react-router-dom'
+import youtubeLink from '../../public/Video.png'
 
 export default function VideoLink() {
     return (
@@ -9,7 +10,7 @@ export default function VideoLink() {
             <Row gutter={20}>
                 <Col span={16}>
                     <Link to='https://www.youtube.com/watch?v=UT9ndxZPXxY'>
-                        <Image preview={false} src='../../public/Video.png' alt='videolink' />
+                        <Image preview={false} src={youtubeLink} alt='videolink' />
                     </Link>
                 </Col>
                 <Col span={8}>

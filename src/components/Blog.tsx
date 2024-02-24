@@ -1,6 +1,6 @@
 import {Card, Col, Flex, Image, Row} from "antd"
 import {ShareAltOutlined} from "@ant-design/icons"
-
+import logo from "../../public/logoblue.svg"
 
 
 export default function Blog() {
@@ -40,7 +40,7 @@ export default function Blog() {
                         </p>
                     </Col>
                     <Col span={4}>
-                        <Image src="../../public/logoblue.svg"/>
+                        <Image src={logo}/>
                     </Col>
                 </Row>
             </Card>
