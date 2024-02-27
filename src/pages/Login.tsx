@@ -23,14 +23,7 @@ export default function Login() {
     return (
         <Flex style={{ height:'100vh' }} align='center'>
             <Flex
-                style={{
-                    marginRight: 'auto',
-                    marginLeft: 'auto',
-                    padding: '2rem 4rem',
-                    width: '30rem',
-                    border: '2px solid #229ED9',
-                    borderRadius: '1rem', backgroundColor:'#e6f4ff'
-                }}
+                className='login-form'
                 vertical={true}
                 gap='1rem'
             >

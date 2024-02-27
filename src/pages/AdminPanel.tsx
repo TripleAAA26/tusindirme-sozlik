@@ -21,7 +21,7 @@ export default function  AdminPanel()  {
     return (
         <Layout style={{ height: '100vh', }}>
             <Sider
-                breakpoint="lg"
+                breakpoint="md"
                 collapsedWidth="0"
                 onBreakpoint={(broken) => {
                     console.log(broken)
@@ -39,7 +39,7 @@ export default function  AdminPanel()  {
             </Sider>
 
             <Layout>
-                <Header style={{ padding: '0 1rem', background: 'lightcyan', fontSize: '1rem' }}>
+                <Header style={{ padding: '0 1rem', marginBottom: '1.5rem', background: 'lightcyan', fontSize: '1rem' }}>
                     <Flex align='center' justify='space-between'>
                         Admin Panel
                         <Flex gap='2rem' align='center'>

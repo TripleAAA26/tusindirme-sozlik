@@ -80,7 +80,7 @@ export default function CardAudio({ selectedWord }) {
             {contextHolder}
             <Card
                 title="Audio"
-                style={{ width: '25rem' }}
+                className='cards-word-antonym-synonym'
                 extra={
                     selectedWord.audio
                         ?
@@ -133,7 +133,7 @@ export default function CardAudio({ selectedWord }) {
                     </Form>
                 </Modal>
                 {selectedWord.audio &&
-                    <audio controls>
+                    <audio controls style={{ width: '15rem'}}>
                         <source src={selectedWord.audio} type="audio/mpeg"/>
                     </audio>
                 }

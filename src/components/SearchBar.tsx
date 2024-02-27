@@ -12,14 +12,7 @@ export default function SearchBar() {
 
 
     return (
-        <div style={{
-            paddingLeft: '10rem',
-            paddingRight: '10rem',
-            marginBottom: '5rem',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            maxWidth: '100rem'
-        }}>
+        <div className='container' >
             <h2>Bir sózdi izleń, onı úyreniń</h2>
 
             { selectedWord
@@ -58,8 +51,8 @@ export default function SearchBar() {
                 </Flex>
             }
 
-            <Flex gap='large' justify='space-between'>
-                <Card style={{ width: '25rem' }}>
+            <Flex className='three-cards' gap='large' justify='space-between'>
+                <Card  className='card-bar'>
                     <h3 style={{ color: '#229ED9' }}>Kóp izlenetuģın sózler</h3>
                     <p>Xızmetker</p>
                     <p>Rezerv</p>
@@ -69,7 +62,7 @@ export default function SearchBar() {
                     <p>Hújjet</p>
                     <Link to='oftenwords'>Hámmesin kóriw <ArrowRightOutlined/></Link>
                 </Card>
-                <Card style={{ width: '25rem' }}>
+                <Card className='card-bar'>
                     <h3 style={{ color: '#229ED9' }}>Tosınarlı sózler</h3>
                     <p>Paydasız</p>
                     <p>Tıshqan</p>
@@ -79,7 +72,7 @@ export default function SearchBar() {
                     <p>Sayılvor</p>
                     <Link to='twords'>Hámmesin kóriw <ArrowRightOutlined/></Link>
                 </Card>
-                <Card style={{ width: '25rem' }}>
+                <Card className='card-bar'>
                     <h3 style={{ color: '#229ED9' }}>Kóp qáte etiletuǵın sózler</h3>
                     <p>Afv</p>
                     <p>Shıbın-shirkey</p>

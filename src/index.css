@@ -1,3 +1,89 @@
 body {
     margin: 0;
 }
+
+.container {
+    padding-left: 10rem;
+    padding-right: 10rem;
+    margin-bottom: 5rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100rem
+}
+
+.card-bar {
+    width: 25rem;
+}
+
+.login-form {
+    margin-right: auto;
+    margin-left: auto;
+    padding: 2rem 4rem;
+    width: 30rem;
+    border: 2px solid #229ED9;
+    border-radius: 1rem;
+    background-color: #e6f4ff;
+}
+
+@media (max-width: 901px) {
+    .menuHeader {
+        display: none;
+    }
+
+    .three-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card-bar {
+        width: 20rem;
+    }
+
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .video-link {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .video-link div {
+        max-width: 100%;
+    }
+
+    .footer-icons {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+.cards-word-antonym-synonym {
+    width: 25rem;
+}
+
+@media (min-width: 900px) {
+    .menuIcon {
+        display: none;
+    }
+}
+
+@media (max-width: 700px) {
+    .login-form {
+        padding: 2rem 2rem;
+        width: 18rem;
+    }
+
+    .ant-layout {
+        position: relative;
+        overflow: hidden;
+        min-width: 100vw;
+    }
+
+    .cards-word-antonym-synonym {
+        width: 18rem;
+    }
+}
+

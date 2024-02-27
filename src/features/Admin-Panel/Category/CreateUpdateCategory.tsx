@@ -3,6 +3,7 @@ import { Button, Flex, Form, Input, message, Modal } from 'antd'
 import useCreateCategory from './useCreateCategory.tsx'
 import { EditOutlined, PlusCircleOutlined } from '@ant-design/icons'
 import useUpdateCategory from './useUpdateCategory.tsx'
+import { useMediaQuery } from 'react-responsive'
 
 export default function CreateUpdateCategory({ item = {}}) {
     const [ open, setOpen ] = useState(false)
@@ -15,6 +16,7 @@ export default function CreateUpdateCategory({ item = {}}) {
     const { createCategory, isPending: isCreating } = useCreateCategory()
     const { updateCategory, isPending: isUpdating } = useUpdateCategory()
 
+    const isMobile = useMediaQuery({ query: '(max-width: 500px)' })
 
     const showModal = () => {
         setOpen(true)
@@ -92,7 +94,11 @@ export default function CreateUpdateCategory({ item = {}}) {
             {contextHolder}
             <Flex justify='end'>
                 <Button type={isUpdateSession ? 'default' : 'primary'} onClick={showModal}>
-                    {isUpdateSession ? <span><EditOutlined /> edit</span> :  <span><PlusCircleOutlined/> Create category</span> }
+                    {isUpdateSession ?
+                        isMobile ? <EditOutlined /> : <span><EditOutlined /> edit</span>
+                        :
+                        isMobile ? <PlusCircleOutlined/> : <span><PlusCircleOutlined/> Create category</span>
+                    }
                 </Button>
             </Flex>
             <Modal

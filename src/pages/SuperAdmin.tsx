@@ -12,6 +12,7 @@ export default function SuperAdmin() {
     const accessToken = useSelector(selectCurrentToken)
     const { data: admins } = useQuery(adminListQuery(accessToken))
 
+
     return (
         <>
             <CreateUpdateAdmin />

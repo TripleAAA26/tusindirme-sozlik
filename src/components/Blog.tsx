@@ -5,7 +5,7 @@ import logo from "../../public/logoblue.svg"
 
 export default function Blog() {
     return (
-        <div style={{paddingLeft: '10rem', paddingRight: '10rem', marginBottom: '5rem', marginLeft:'auto', marginRight:'auto', maxWidth:'100rem'}}>
+        <div className='container'>
             <h2>Baǵdarlama haqqında</h2>
             <Card style={{boxShadow:'0 1px 1px 1px rgba(0, 0, 0, 0.2)'}}>
                 <Row>

@@ -57,7 +57,7 @@ export default function SelectedWord() {
                     Is correct
                 </Checkbox>
             </Row>
-            <Row style={{ justifyContent: 'space-between'}}>
+            <Row style={{ justifyContent: 'space-between', marginBottom: '1rem' }}>
                 <Col>
                     <p style={{ fontSize: '1.4rem', fontWeight: 'bold'}}>Description:</p>
                     <p>{selectedWord.description.latin}</p>
@@ -70,7 +70,7 @@ export default function SelectedWord() {
                     <CardAntonymSynonym selectedWord={selectedWord} words={words} isAntonym={true} />
                 </Col>
             </Row>
-            <Row style={{ justifyContent: 'space-between'}}>
+            <Row style={{ justifyContent: 'space-between', gap: '1rem'}}>
                 <Col>
                     <CardAudio selectedWord={selectedWord} />
                 </Col>

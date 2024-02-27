@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query'
 import { getCategoryApi } from '../../../service/categoryApi.ts'
 import { useSelector } from 'react-redux'
 import { selectCurrentToken } from '../../auth/authSlice.ts'
+import { useMediaQuery } from 'react-responsive'
 
 
 export default function CreateUpdateWord({ item = {} }) {
@@ -19,6 +20,8 @@ export default function CreateUpdateWord({ item = {} }) {
 
     const { createWord, isPending:isCreactingWord } = useCreateWord()
     const { updateWord, isPending:isUpdatingWord } = useUpdateWord()
+
+    const isMobile = useMediaQuery({ query: '(max-width: 500px)' })
 
     const accessToken = useSelector(selectCurrentToken)
     const { data: categories } = useQuery({
@@ -125,7 +128,11 @@ export default function CreateUpdateWord({ item = {} }) {
             {contextHolder}
             <Flex justify='end'>
                 <Button type={isUpdateSession ? 'default' : 'primary'} onClick={showModal}>
-                    {isUpdateSession ? <span><EditOutlined /> edit</span> :  <span><PlusCircleOutlined/> Create word</span> }
+                    {isUpdateSession ?
+                        isMobile ? <EditOutlined /> : <span><EditOutlined /> edit</span>
+                        :
+                        isMobile ? <PlusCircleOutlined/> : <span><PlusCircleOutlined/> Create word</span>
+                    }
                 </Button>
             </Flex>
             <Modal

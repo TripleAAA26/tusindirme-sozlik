@@ -3,6 +3,7 @@ import { Button, Flex, Form, Input, message, Modal, Select } from 'antd'
 import { EditOutlined, PlusCircleOutlined } from '@ant-design/icons'
 import useUpdateAdmin from './useUpdateAdmin.tsx'
 import useCreateAdmin from './useCreateAdmin.tsx'
+import { useMediaQuery } from 'react-responsive'
 
 
 
@@ -17,6 +18,7 @@ export default function CreateUpdateAdmin({ item = {} }) {
     const { createAdmin, isPending: isCreating } = useCreateAdmin()
     const { updateAdmin, isPending: isUpdating } = useUpdateAdmin()
 
+    const isMobile = useMediaQuery({ query: '(max-width: 500px)' })
 
     const initialRole =
         (item.role === 'admin' && 1) ||
@@ -105,7 +107,11 @@ export default function CreateUpdateAdmin({ item = {} }) {
             {contextHolder}
             <Flex justify='end'>
                 <Button type={isUpdateSession ? 'default' : 'primary'} onClick={showModal}>
-                    {isUpdateSession ? <span><EditOutlined /> edit</span> :  <span><PlusCircleOutlined/> Create Admin</span> }
+                    {isUpdateSession ?
+                        isMobile ? <EditOutlined /> : <span><EditOutlined /> edit</span>
+                        :
+                        isMobile ? <PlusCircleOutlined/> : <span><PlusCircleOutlined/> Create Admin</span>
+                    }
                 </Button>
             </Flex>
             <Modal

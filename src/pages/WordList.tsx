@@ -9,14 +9,7 @@ export default function WordList() {
     console.log('HI!',wordList)
 
     return (
-        <div style={{
-            paddingLeft: '10rem',
-            paddingRight: '10rem',
-            marginBottom: '5rem',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            maxWidth: '100rem'
-        }}>
+        <div className='container'>
             <h2>Sózler dizimi</h2>
             <Card style={{ marginBottom: '5rem' }}>
                 <List

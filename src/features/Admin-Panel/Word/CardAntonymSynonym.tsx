@@ -145,7 +145,7 @@ export default function CardAntonymSynonym({ selectedWord, words, isAntonym }) {
             {contextHolder}
             <Card
                 title={isAntonym ? 'Antonyms:' : 'Synonyms:'}
-                style={{ width: '25rem' }}
+                className='cards-word-antonym-synonym'
                 extra={<Button onClick={showModal}>edit</Button>}
             >
                 <Modal

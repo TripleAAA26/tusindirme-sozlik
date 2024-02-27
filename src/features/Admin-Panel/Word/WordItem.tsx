@@ -3,10 +3,13 @@ import { DeleteOutlined } from '@ant-design/icons'
 import useDeleteWord from './useDeleteWord.ts'
 import CreateUpdateWord from './CreateUpdateWord.tsx'
 import { Link } from 'react-router-dom'
+import { useMediaQuery } from 'react-responsive'
 
 export default function WordItem({ item }) {
     const { deleteWord, isPending:isDeletingWord } = useDeleteWord()
     const [ messageApi, contextHolder ] = message.useMessage()
+
+    const isMobile = useMediaQuery({ query: '(max-width: 500px)' })
 
     function handleDelete() {
         deleteWord({ idWord: item.id }, {
@@ -28,7 +31,11 @@ export default function WordItem({ item }) {
     return (
         <>
             {contextHolder}
-            <List.Item actions={[ <Button type='default' danger={true} loading={isDeletingWord} onClick={handleDelete}><DeleteOutlined />delete</Button>, ]}>
+            <List.Item actions={[
+                <Button type='default' danger={true} loading={isDeletingWord} onClick={handleDelete}>
+                    { isMobile ? <DeleteOutlined/> : <span><DeleteOutlined/>delete</span>}
+                </Button>
+            ]}>
                 <Link to={`${item.id}`} style={{ marginRight: 'auto'}}>
                     <List.Item.Meta
                         title={<p>{item.title.latin}</p>}

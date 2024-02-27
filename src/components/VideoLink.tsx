@@ -5,9 +5,11 @@ import youtubeLink from '../../public/Video.png'
 
 export default function VideoLink() {
     return (
-        <div style={{paddingLeft: '10rem', paddingRight: '10rem', marginBottom: '5rem', marginLeft:'auto', marginRight:'auto', maxWidth:'100rem'}}>
+        <div
+            className='container'
+        >
             <h2>Sózlerdi úyreniwdiń eń nátiyjeli usılı</h2>
-            <Row gutter={20}>
+            <Row gutter={20} className='video-link'>
                 <Col span={16}>
                     <Link to='https://www.youtube.com/watch?v=UT9ndxZPXxY'>
                         <Image preview={false} src={youtubeLink} alt='videolink' />

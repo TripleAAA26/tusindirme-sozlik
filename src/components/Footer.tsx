@@ -6,8 +6,13 @@ import logo from "../../public/logoblue.svg"
 
 export default function Footer() {
     return (
-        <div style={{paddingLeft: '10rem', paddingRight: '10rem', marginBottom: '5rem', marginLeft:'auto', marginRight:'auto', maxWidth:'100rem'}}>
-            <Flex style={{borderTop: '1px solid lightgrey'}} justify='space-between' align='center'>
+        <div className='container'>
+            <Flex
+                style={{borderTop: '1px solid lightgrey'}}
+                justify='space-between'
+                align='center'
+                className='footer-icons'
+            >
                 <Flex gap='0.5rem' style={{color:'#229ED9'}} align='center'>
                     <img style={{height:'1.5rem', width:'1.5rem'}} src={logo} alt="logo"/>
                     <p style={{fontWeight: 'bold'}}>Túsindirme sózlik</p>
