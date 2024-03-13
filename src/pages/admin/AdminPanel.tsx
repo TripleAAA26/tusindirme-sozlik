@@ -1,8 +1,8 @@
 import { BarsOutlined, FileWordOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons'
 import { Button, Flex, Layout, Menu } from 'antd'
 import { Outlet, useNavigate } from 'react-router-dom'
-import { useLogout } from '../features/auth/useLogout.ts'
-import useGetSuperAdmin from '../hooks/useGetSuperAdmin.tsx'
+import { useLogout } from '../../features/auth/useLogout.ts'
+import useGetSuperAdmin from '../../hooks/useGetSuperAdmin.tsx'
 
 
 const {

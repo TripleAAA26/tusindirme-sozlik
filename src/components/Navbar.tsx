@@ -3,23 +3,26 @@ import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import logo from '../../public/logo.svg'
 import { MenuOutlined } from '@ant-design/icons'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectCurrentLanguage, switchLanguage } from '../features/public-client-side/languageSlice.ts'
 
 export default function Navbar() {
-    const [ currentLanguage, setCurrentLanguage ] = useState('QQ')
     const [ open, setOpen ] = useState(false)
+    const dispatch = useDispatch()
+    const currentLanguage = useSelector(selectCurrentLanguage)
 
     function changeLanguage() {
-        setCurrentLanguage(prevState => prevState === 'QQ' ? 'КK' : 'QQ')
+        dispatch(switchLanguage())
     }
 
     return (
-        <>
+        <div style={{ position: 'sticky', top: '0', zIndex: 1 }}>
             <div style={{
                 backgroundColor: '#229ED9',
                 color: 'white',
                 height: '3rem',
                 marginBottom: '5rem',
-                padding: '1rem'
+                padding: '1rem',
                 }}
                  className='menuIcon'
             >
@@ -32,6 +35,7 @@ export default function Navbar() {
                 <NavItem
                     currentLanguage={currentLanguage}
                     changeLanguage={changeLanguage}
+                    isInline={false}
                 />
             </span>
             <Drawer
@@ -39,7 +43,7 @@ export default function Navbar() {
                 placement="left"
                 open={open}
                 onClose={() => setOpen(false)}
-                bodyStyle={{ backgroundColor: '#229ED9', }}
+                styles={{ body: { backgroundColor: '#229ED9' } }}
             >
                 <NavItem
                     isInline={true}
@@ -48,11 +52,18 @@ export default function Navbar() {
                     setOpen={setOpen}
                 />
             </Drawer>
-        </>
+        </div>
     )
 }
 
-function NavItem({currentLanguage , changeLanguage, setOpen, isInline = false }) {
+function NavItem({currentLanguage , changeLanguage, setOpen, isInline }) {
+    const isLatin = currentLanguage === 'Qq'
+
+    function CloseHandler() {
+        document.getElementById('searchBar').scrollIntoView({behavior: 'smooth'})
+        if(!setOpen) return
+        setOpen(false)
+    }
 
     return (
         <Flex
@@ -67,7 +78,7 @@ function NavItem({currentLanguage , changeLanguage, setOpen, isInline = false })
                     paddingRight: '10rem',
                     color: 'white',
                     height: '5rem',
-                    marginBottom: '5rem'
+                    marginBottom: '5rem',
                 } : {
                     fontSize: '1rem',
                     fontWeight: 'bold'
@@ -75,31 +86,34 @@ function NavItem({currentLanguage , changeLanguage, setOpen, isInline = false })
             }
         >
 
-            <Link to="/" onClick={() => setOpen(false)}>
+            <Link to="/" onClick={CloseHandler}>
                 <Flex gap="1rem">
                     <img src={logo} alt="logo"/>
-                    <span style={{ color: 'white' }}>Túsindirme sózlik</span>
+                    <p style={{ fontWeight: 'bold', color: 'white' }}>
+                        {isLatin ? 'Túsindirme sózlik' : 'Тусиндирме сөзлик'}
+                    </p>
                 </Flex>
             </Link>
             <Flex vertical={isInline} gap="large">
-                <Link to="#"
-                      onClick={() => setOpen(false)}
+                <Link to="/"
+                      onClick={CloseHandler}
                       style={{ color: 'white' }}
-                >Sózler
+                >
+                    {isLatin ? 'Sózler' : 'Сөзлер'}
                 </Link>
 
                 <Link to="/wordlist"
-                      onClick={() => setOpen(false)}
+                      onClick={CloseHandler}
                       style={{ color: 'white' }}
                 >
-                    Sózler dizimi
+                    {isLatin ? 'Sózler dizimi' : 'Сөзлер дизими'}
                 </Link>
 
-                <Link to="#"
-                      onClick={() => setOpen(false)}
+                <Link to="/about"
+                      onClick={CloseHandler}
                       style={{ color: 'white' }}
                 >
-                    Baģdarlama haqqında
+                    {isLatin ? 'Baģdarlama haqqında' : 'Бағдарлама ҳаққында'}
                 </Link>
             </Flex>
 

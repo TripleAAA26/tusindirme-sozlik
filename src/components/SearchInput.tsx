@@ -1,34 +1,37 @@
 import { useState } from 'react'
 import { Select } from 'antd'
 import type { SelectProps } from 'antd'
-import { getWords } from '../service/getWords.ts'
-import { useQuery } from '@tanstack/react-query'
+import usePublicGetWords from '../hooks/usePublicGetWords.ts'
+import { useNavigate } from 'react-router-dom'
 
 let timeout: ReturnType<typeof setTimeout> | null
-let currentValue: string
 
 const fetch = (value: string, callback: Function, wordList) => {
     if (timeout) {
         clearTimeout(timeout)
         timeout = null
     }
-    currentValue = value
+
 
     const fake = async () => {
 
-         //const d = await getWords()
+        const { data } = wordList
 
-         if (currentValue === value) {
-             const { data } = wordList
+        const filteredResults = data.filter(item =>
+            item.title.latin.toLowerCase().includes(value.toLowerCase()) ||
+            item.title.kiril.toLowerCase().includes(value.toLowerCase())
+        )
 
-             const result = data.map((item) => ({
-                 value: item.title.latin,
-                 text: item.title.latin,
-                 id: item.id
-             }))
+        const result = filteredResults.map((item) => {
+            return {
+                value: item.title.latin,
+                text: item.title.latin,
+                id: item.id
+            }
+        })
 
-             callback(result)
-         }
+        callback(result)
+
     }
 
     if (value) {
@@ -41,11 +44,9 @@ const fetch = (value: string, callback: Function, wordList) => {
 const SearchInput = (props) => {
     const [ data, setData ] = useState<SelectProps['options']>([])
     const [ value, setValue ] = useState<string>()
+    const navigate = useNavigate()
 
-    const { data: wordList } = useQuery({
-        queryKey: [ 'wordlist' ],
-        queryFn: async () => getWords(),
-    })
+    const { wordList } = usePublicGetWords()
 
     const handleSearch = (newValue: string) => {
         fetch(newValue, setData, wordList)
@@ -57,13 +58,14 @@ const SearchInput = (props) => {
 
     const handleSelect = (selected) => {
         const word = wordList.data.find(word => word.id === selected)
-        props.setSelectedWord(word)
+        navigate(`/soz/${word.id}`)
+        setValue('')
+        setData([])
     }
 
     return (
         <Select
-            size='large'
-
+            size="large"
             showSearch
             value={value}
             placeholder={props.placeholder}

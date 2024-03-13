@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
 import { List } from 'antd'
 
-import { getWordsApi } from '../service/wordApi.ts'
-import WordItem from '../features/Admin-Panel/Word/WordItem.tsx'
-import CreateUpdateWord from '../features/Admin-Panel/Word/CreateUpdateWord.tsx'
+import { getWordsApi } from '../../service/wordApi.ts'
+import WordItem from '../../features/Admin-Panel/Word/WordItem.tsx'
+import CreateUpdateWord from '../../features/Admin-Panel/Word/CreateUpdateWord.tsx'
 import { useSelector } from 'react-redux'
-import { selectCurrentToken } from '../features/auth/authSlice.ts'
+import { selectCurrentToken } from '../../features/auth/authSlice.ts'
 
 
 

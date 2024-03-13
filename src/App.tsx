@@ -3,20 +3,19 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import AppLayout from "./components/AppLayout.tsx"
 import Error from "./components/Error.tsx"
-import Home from "./pages/Home.tsx"
-import WordList, { loader as wordListLoader } from "./pages/WordList.tsx"
-import OftenSearchedWords from "./pages/OftenSearchedWords.tsx"
-import Login from './pages/Login.tsx'
-import AdminPanel from './pages/AdminPanel.tsx'
+import Home from "./pages/user/Home.tsx"
+import WordList from "./pages/user/WordList.tsx"
+import Login from './pages/admin/Login.tsx'
+import AdminPanel from './pages/admin/AdminPanel.tsx'
 import RequireAuth from './features/auth/RequireAuth.tsx'
-import TWords from './pages/TWords.tsx'
-import MisspelledWords from './pages/MisspelledWords.tsx'
-import SuperAdmin, { loader as adminLoader } from './pages/SuperAdmin.tsx'
-import Category, { loader as categoryLoader } from './pages/Category.tsx'
-import Word, { loader as wordLoader } from './pages/Word.tsx'
-import SelectedWord from './pages/SelectedWord.tsx'
+import SuperAdmin, { loader as adminLoader } from './pages/admin/SuperAdmin.tsx'
+import Category, { loader as categoryLoader } from './pages/admin/Category.tsx'
+import Word, { loader as wordLoader } from './pages/admin/Word.tsx'
+import SelectedWord from './pages/admin/SelectedWord.tsx'
 import { useSelector } from 'react-redux'
 import { selectCurrentToken } from './features/auth/authSlice.ts'
+import Blog from './pages/user/Blog.tsx'
+import SearchResults from './pages/user/SearchResults.tsx'
 
 
 const queryClient = new QueryClient({
@@ -36,10 +35,10 @@ const AppRoot = () => {
             errorElement: <Error/>,
             children: [
                 { path: '/', element: <Home/> },
-                { path: '/wordlist', element: <WordList/>, loader: wordListLoader(queryClient) },
-                { path: '/oftenwords', element: <OftenSearchedWords/> },
-                { path: '/twords', element: <TWords/> },
-                { path: '/misspelledwords', element: <MisspelledWords/> },
+                { path: '/wordlist', element: <WordList/>,  },
+                { path: '/wordlist/:letter', element: <WordList/>,  },
+                { path: '/about', element: <Blog/> },
+                { path: '/soz/:idsoz', element: <SearchResults /> }
             ],
         },
         { path: '/login', element: <Login/> },

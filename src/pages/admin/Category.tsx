@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
-import { getCategoryApi } from '../service/categoryApi.ts'
-import CategoryItem from '../features/Admin-Panel/Category/CategoryItem.tsx'
+import { getCategoryApi } from '../../service/categoryApi.ts'
+import CategoryItem from '../../features/Admin-Panel/Category/CategoryItem.tsx'
 import { List } from 'antd'
-import CreateUpdateCategory from '../features/Admin-Panel/Category/CreateUpdateCategory.tsx'
+import CreateUpdateCategory from '../../features/Admin-Panel/Category/CreateUpdateCategory.tsx'
 import { useSelector } from 'react-redux'
-import { selectCurrentToken } from '../features/auth/authSlice.ts'
+import { selectCurrentToken } from '../../features/auth/authSlice.ts'
 
 
 export default function Category() {

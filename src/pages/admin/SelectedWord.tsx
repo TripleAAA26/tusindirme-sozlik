@@ -1,13 +1,13 @@
 import { useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { Checkbox, Col, message, Row } from 'antd'
-import { getWordsApi } from '../service/wordApi.ts'
+import { getWordsApi } from '../../service/wordApi.ts'
 
-import CardAntonymSynonym from '../features/Admin-Panel/Word/CardAntonymSynonym.tsx'
-import CardAudio from '../features/Admin-Panel/Audio/CardAudio.tsx'
-import useIsCorrect from '../features/Admin-Panel/Word/useIsCorrect.ts'
+import CardAntonymSynonym from '../../features/Admin-Panel/Word/CardAntonymSynonym.tsx'
+import CardAudio from '../../features/Admin-Panel/Audio/CardAudio.tsx'
+import useIsCorrect from '../../features/Admin-Panel/Word/useIsCorrect.ts'
 import { useSelector } from 'react-redux'
-import { selectCurrentToken } from '../features/auth/authSlice.ts'
+import { selectCurrentToken } from '../../features/auth/authSlice.ts'
 
 
 export default function SelectedWord() {

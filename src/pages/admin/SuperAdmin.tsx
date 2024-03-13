@@ -1,11 +1,11 @@
 
 import { useQuery } from '@tanstack/react-query'
 import { List } from 'antd'
-import { getAdminApi } from '../service/adminApi.ts'
-import AdminItem from '../features/Admin-Panel/SuperAdmin/AdminItem.tsx'
-import CreateUpdateAdmin from '../features/Admin-Panel/SuperAdmin/CreateUpdateAdmin.tsx'
+import { getAdminApi } from '../../service/adminApi.ts'
+import AdminItem from '../../features/Admin-Panel/SuperAdmin/AdminItem.tsx'
+import CreateUpdateAdmin from '../../features/Admin-Panel/SuperAdmin/CreateUpdateAdmin.tsx'
 import { useSelector } from 'react-redux'
-import { selectCurrentToken } from '../features/auth/authSlice.ts'
+import { selectCurrentToken } from '../../features/auth/authSlice.ts'
 
 
 export default function SuperAdmin() {
